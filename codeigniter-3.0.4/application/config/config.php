@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $ipServer = $_SERVER['SERVER_ADDR'];
-$config['base_url'] = 'http://' . $ipServer . '/app-name/';
+$config['base_url'] = 'http://' . $ipServer . '/codeigniter-basic-setup/';
 
 /*
 |--------------------------------------------------------------------------
