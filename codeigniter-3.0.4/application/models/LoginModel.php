@@ -10,7 +10,7 @@ class LoginModel extends CI_Model {
 	function checkLogin( $input )
 	{
 		$hashedPassword = md5($input->password);
-		$sql = "SELECT * FROM users WHERE username=? AND password=?";
+		$sql = "SELECT * FROM user WHERE username=? AND password=?";
     	$query=$this->db->query($sql, array( $input->username, $hashedPassword ));
 		if ($query->num_rows() > 0)
 			return $query->row();

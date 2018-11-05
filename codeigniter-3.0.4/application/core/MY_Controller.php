@@ -7,29 +7,49 @@ class MY_Controller extends CI_Controller
 	{
 		parent::__construct();
 
-        $this->load->helper('url');
 		$this->load->library('session');
-        $this->load->helper('common');
 
-		$this->validateUser();
+		$this->load->helper('url');
+		$this->load->helper('common');
+
+		$this->load->model( 'PageAuthenticationModel' );
+
+		$this->validateUserCredential();
+		$this->validateVisitedPage();
 	}
 
-	function validateUser()
+	function validateUserCredential()
 	{
 		if ( !$this->session->userdata('USER') )
 		{
-			$currentPage = $this->uri->segment(1);
-			if( $this->isRestrictedPage( $currentPage ) )
+			$currentController = $this->uri->segment(1);
+			if( !$this->PageAuthenticationModel->isOpenPage( $currentController ) ){
+				$this->session->set_userdata('original-visited-uri', uri_string()); // save original visited uri to session
 				redirect( 'login' );
+			}
 		}
 	}
 
-	function isRestrictedPage( $page ){
-		$openPages = array( 'login', 'logout' );
-		for( $i= 0; $i <= count( $openPages ); $i++ )
-			if( $openPages[ $i ] == $page )
-				return false;
-		return true;
+	function validateVisitedPage()
+	{
+		if( !isset( $_SESSION['USER'] ) )
+			return;
+
+		$userStatus = $_SESSION['USER']->status;
+		$controllerName = $this->uri->segment(1);
+		$functionName = $this->uri->segment(2);
+
+		if( !$this->PageAuthenticationModel->isAuthorized( $controllerName, $functionName, $userStatus ) )
+		{
+			$this->redirectToDefaultHomePage();
+		}
+	}
+
+	function redirectToDefaultHomePage()
+	{
+		$userStatus = $_SESSION['USER']->status;
+		$defaultHomePage = $this->PageAuthenticationModel->getDefaultHomePage( $userStatus );
+		redirect( $defaultHomePage );
 	}
 
 }

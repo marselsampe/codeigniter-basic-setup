@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-define('MYAPP_SITE_TITLE', 'My Site');
-
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace

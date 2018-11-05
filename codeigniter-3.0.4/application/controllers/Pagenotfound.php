@@ -1,5 +1,5 @@
 <?php 
-class Pagenotfound extends CI_Controller 
+class Pagenotfound extends MY_Controller 
 {
     public function __construct() 
     {

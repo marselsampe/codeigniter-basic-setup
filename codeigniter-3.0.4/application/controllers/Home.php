@@ -1,5 +1,5 @@
 <?php 
-class Home extends My_Controller 
+class Home extends MY_Controller 
 {
     public function __construct() 
     {
@@ -8,8 +8,15 @@ class Home extends My_Controller
 
     public function index() 
     {
-        $this->load->view('layout/header');
+        $HeaderData[ 'title' ] = 'Home';
+        $HeaderData[ 'contentTitle' ] = 'Dashboard';
+
+        $this->load->view('layout/header', $HeaderData);
         $this->load->view('home/index');
         $this->load->view('layout/footer');
+    }
+
+    public function test(){
+        
     }
 }

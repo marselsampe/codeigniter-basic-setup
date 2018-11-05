@@ -36,3 +36,7 @@ function toUserCurrencyFormat($value)
 {
 	return str_replace('.00', '', number_format($value, 2, '.', ','));
 }
+
+function echoValue($variable){
+	return isset($variable) ? $variable : '';
+}
