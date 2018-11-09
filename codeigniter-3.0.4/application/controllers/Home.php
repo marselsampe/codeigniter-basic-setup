@@ -15,8 +15,4 @@ class Home extends MY_Controller
         $this->load->view('home/index');
         $this->load->view('layout/footer');
     }
-
-    public function test(){
-        
-    }
 }

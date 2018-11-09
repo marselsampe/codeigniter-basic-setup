@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="<?= base_url('assets/adminlte-2.4.5/dependencies/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') ?>">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="<?= base_url('assets/adminlte-2.4.5/dependencies/bootstrap-daterangepicker/daterangepicker.css') ?>">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="<?= base_url('assets/adminlte-2.4.5/dependencies/datatables.net-bs/css/dataTables.bootstrap.min.css') ?>">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="<?= base_url('assets/adminlte-2.4.5/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') ?>">
 
@@ -37,6 +39,10 @@
 
     <!-- Google Font -->
     <link rel="stylesheet" href="<?= base_url('assets/adminlte-2.4.5/fonts.css') ?>">
+
+    <!-- jQuery -->
+    <script src="<?= base_url('assets/adminlte-2.4.5/dependencies/jquery/dist/jquery.min.js') ?>"></script>
+
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
 
@@ -54,3 +60,5 @@
         <?php
         $this->load->view('layout/header-content-title', $HeaderData );
         ?>
+        <!-- Main Section -->
+        <section class="content">

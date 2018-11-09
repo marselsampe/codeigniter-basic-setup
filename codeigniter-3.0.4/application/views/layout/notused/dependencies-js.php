@@ -1,5 +1,4 @@
 <!-- JS DEPENDENCIES -->
-<script src="<?= base_url('assets/adminlte-2.4.5/dependencies/jquery/dist/jquery.min.js') ?>"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="<?= base_url('assets/adminlte-2.4.5/dependencies/jquery-ui/jquery-ui.min.js') ?>"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -8,6 +7,9 @@
 </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?= base_url('assets/adminlte-2.4.5/dependencies/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
+<!-- DataTables -->
+<script src="<?= base_url('assets/adminlte-2.4.5/dependencies/datatables.net/js/jquery.dataTables.min.js') ?>"></script>
+<script src="<?= base_url('assets/adminlte-2.4.5/dependencies/datatables.net-bs/js/dataTables.bootstrap.min.js') ?>"></script>
 <!-- Morris.js charts -->
 <script src="<?= base_url('assets/adminlte-2.4.5/dependencies/raphael/raphael.min.js') ?>"></script>
 <script src="<?= base_url('assets/adminlte-2.4.5/dependencies/morris.js/morris.min.js') ?>"></script>

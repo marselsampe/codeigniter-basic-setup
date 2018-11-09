@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class PageAuthenticationModel extends CI_Model 
+class PageAuthenticationAndAuthorizationModel extends CI_Model 
 {
 	function __construct()
 	{

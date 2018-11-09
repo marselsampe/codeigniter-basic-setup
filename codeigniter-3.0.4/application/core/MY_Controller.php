@@ -12,7 +12,7 @@ class MY_Controller extends CI_Controller
 		$this->load->helper('url');
 		$this->load->helper('common');
 
-		$this->load->model( 'PageAuthenticationModel' );
+		$this->load->model( 'PageAuthenticationAndAuthorizationModel' );
 
 		$this->validateUserCredential();
 		$this->validateVisitedPage();
@@ -23,7 +23,7 @@ class MY_Controller extends CI_Controller
 		if ( !$this->session->userdata('USER') )
 		{
 			$currentController = $this->uri->segment(1);
-			if( !$this->PageAuthenticationModel->isOpenPage( $currentController ) ){
+			if( !$this->PageAuthenticationAndAuthorizationModel->isOpenPage( $currentController ) ){
 				$this->session->set_userdata('original-visited-uri', uri_string()); // save original visited uri to session
 				redirect( 'login' );
 			}
@@ -39,7 +39,7 @@ class MY_Controller extends CI_Controller
 		$controllerName = $this->uri->segment(1);
 		$functionName = $this->uri->segment(2);
 
-		if( !$this->PageAuthenticationModel->isAuthorized( $controllerName, $functionName, $userStatus ) )
+		if( !$this->PageAuthenticationAndAuthorizationModel->isAuthorized( $controllerName, $functionName, $userStatus ) )
 		{
 			$this->redirectToDefaultHomePage();
 		}
@@ -48,8 +48,13 @@ class MY_Controller extends CI_Controller
 	function redirectToDefaultHomePage()
 	{
 		$userStatus = $_SESSION['USER']->status;
-		$defaultHomePage = $this->PageAuthenticationModel->getDefaultHomePage( $userStatus );
+		$defaultHomePage = $this->PageAuthenticationAndAuthorizationModel->getDefaultHomePage( $userStatus );
 		redirect( $defaultHomePage );
+	}
+
+	function getUserCredential()
+	{
+		return $_SESSION[ 'USER' ];
 	}
 
 }
