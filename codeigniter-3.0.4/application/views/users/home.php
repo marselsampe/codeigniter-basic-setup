@@ -1,3 +1,10 @@
+
+<?php if ($this->session->flashdata('msg_success')) { ?>
+<div class="alert alert-success"> <?= $this->session->flashdata('msg_success') ?> </div>
+<?php } ?>
+<?php if ($this->session->flashdata('msg_error')) { ?>
+<div class="alert alert-danger"> <?= $this->session->flashdata('msg_error') ?> </div>
+<?php } ?>
 <div class="box">
 	<div class="box-body">
 		<a class="btn btn-primary" href="<?= base_url('users/add') ?>">Tambah User</a>

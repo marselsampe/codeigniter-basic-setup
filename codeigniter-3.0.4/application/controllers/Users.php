@@ -53,39 +53,39 @@ class Users extends MY_Controller
     public function add()
     {
         $headerData[ 'title' ] = 'Users';
-        $headerData[ 'contentTitle' ] = 'Tambah User';
+        $headerData[ 'contentTitle' ] = 'Users';
         $headerData[ 'userCredential' ] = $this->getUserCredential();
 
         $data = array();
         if($_POST){
+            $name=$this->input->post('name');
+            $email=$this->input->post('email');
+            $status=$this->input->post('status');
             $username=$this->input->post('username');
             $password=$this->input->post('password');
             $repassword=$this->input->post('repassword');
-            $nama=$this->input->post('nama');
-            $status=$this->input->post('status');
-            $email=$this->input->post('email');
 
             $input=new stdClass();
+            $input->name=$name;
+            $input->email=$email;
+            $input->status=$status;
             $input->username=$username;
             $input->password=$password;
             $input->repassword=$repassword;
-            $input->nama=$nama;
-            $input->email=$email;
-            $input->status=$status;
             $input->reststatus='Pending';
 
             $data['input']=$input;
-
-            if($username=="" || $password=="" || $repassword=="" || $nama=="" || $status==""){
+            
+            if($name=="" || $status=="" || $username=="" || $password=="" || $repassword==""){
                 $this->session->set_flashdata('msg_error', 'Inputan belum lengkap !');
             }else if($password!=$repassword){
                 $this->session->set_flashdata('msg_error', 'Password tidak sesuai !');
             }else{
-                $result=$this->UserModel->insert($input);
+                $result=$this->UsersModel->insert($input);
 
                 if( $result == null || $result["code"] == 0 ){
                     $this->session->set_flashdata('msg_success', 'Data disimpan');
-                    redirect('user/home');
+                    redirect('users/home');
                 }else if($result["code"]=="1062"){
                     $this->session->set_flashdata('msg_error', 'Username sudah digunakan');
                 } else if ($result != null && $result["code"]!="0"){
@@ -99,14 +99,83 @@ class Users extends MY_Controller
         $this->load->view('layout/footer');
     }
 
-    public function edit()
+    public function edit( $uniqueId=NULL )
     {
+        if( !$uniqueId )
+            redirect('users/home');
 
+        $headerData[ 'title' ] = 'Users';
+        $headerData[ 'contentTitle' ] = 'Users';
+        $headerData[ 'userCredential' ] = $this->getUserCredential();
+
+        $data = array();
+
+        $oldRow = $this->UsersModel->getDetail($uniqueId);
+        $data['oldRow'] = $oldRow;
+
+        if(!$_POST){
+            if(!$oldRow)
+                redirect('users/home');
+            $data['input'] = $oldRow;
+        }else{
+            $name=$this->input->post('name');
+            $email=$this->input->post('email');
+            $status=$this->input->post('status');
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $repassword=$this->input->post('repassword');
+            $isActive=$this->input->post('isActive');
+
+            $input=new stdClass();
+            $input->name=$name;
+            $input->email=$email;
+            $input->status=$status;
+            $input->username=$username;
+            $input->password=$password;
+            $input->repassword=$repassword;
+            $input->isActive=$isActive;
+            $input->reststatus='Pending';
+
+            $data['input']=$input;
+
+            if($name=="" || $status=="" || $username==""){
+                $this->session->set_flashdata('msg_error', 'Inputan belum lengkap !');
+            }else if($password!=$repassword){
+                $this->session->set_flashdata('msg_error', 'Password tidak sesuai !');
+            }else{
+                $result=$this->UsersModel->update($input, $uniqueId);
+
+                if( $result == null || $result["code"] == 0 ){
+                    $this->session->set_flashdata('msg_success', 'Data disimpan');
+                    redirect('users/home');
+                }else if($result["code"]=="1062"){
+                    $this->session->set_flashdata('msg_error', 'Username sudah digunakan');
+                } else if ($result != null && $result["code"]!="0"){
+                    $this->session->set_flashdata('msg_error', "Terjadi kesalahan :<br/>" . $result["message"] );
+                }
+            }
+        }
+
+        $this->load->view('layout/header', $headerData);
+        $this->load->view('users/edit', $data);
+        $this->load->view('layout/footer');
     }
 
-    public function delete()
+    public function delete( $uniqueId = NULL )
     {
+        if( !$uniqueId )
+            redirect('user/home');
 
+        $result=$this->UsersModel->delete($uniqueId);
+
+        if( $result == null || $result["code"] == 0 ){
+            $this->session->set_flashdata('msg_success', 'Data dihapus');
+            redirect('users/home');
+        }else if($result["code"]=="1451"){
+            $this->session->set_flashdata('msg_error', 'Tidak dapat dihapus, data ini berhubungan dengan tabel lain');
+        } else if ($result != null && $result["code"]!="0"){
+            $this->session->set_flashdata('msg_error', "Terjadi kesalahan :<br/>" . $result["message"] );
+        }
     }
 
 }
