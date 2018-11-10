@@ -11,7 +11,7 @@ class Paginationhelperlibrary {
 		$config['uri_segment'] = $pagination_urisegment;
 		$config['num_links'] = 1;
 
-		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_open'] = '<ul class="pagination" style="margin: 0px">';
 		$config['full_tag_close'] = '</ul>';
 		$config['first_link'] = false;
 		$config['last_link'] = false;
