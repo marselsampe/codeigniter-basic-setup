@@ -20,9 +20,9 @@ class Users extends MY_Controller
         $headerData[ 'userCredential' ] = $this->getUserCredential();
 
         // search session
-        $search = $this->UsersModel->handleAndGetSearchSession( 
-            $this->input->post('searchCategory'), 
-            $this->input->post('searchKeyword'), 
+        $search = $this->UsersModel->handleAndGetSearchSession(
+            $this->input->post('searchCategory'),
+            $this->input->post('searchKeyword'),
             $this->input->post('searchReset')
             );
         $data[ 'search' ] = $search;
@@ -34,9 +34,8 @@ class Users extends MY_Controller
         $pagination_offset = $this->uri->segment($pagination_urisegment);
 
         // fetch data
-        $search->searchKeyword = '%' . $search->searchKeyword . '%';
-        $data['listData'] = $this->UsersModel->getData($search->searchCategory, $search->searchKeyword, $pagination_perpage, $pagination_offset);
-        $data['totalData'] = $this->UsersModel->getDataCount($search->searchCategory, $search->searchKeyword);
+        $data['listData'] = $this->UsersModel->getData($search->searchCategory, '%'.$search->searchKeyword.'%', $pagination_perpage, $pagination_offset);
+        $data['totalData'] = $this->UsersModel->getDataCount($search->searchCategory, '%'.$search->searchKeyword.'%');
 
         // pagination
         $totalData = $data['totalData'];

@@ -5,9 +5,39 @@
 <?php if ($this->session->flashdata('msg_error')) { ?>
 <div class="alert alert-danger"> <?= $this->session->flashdata('msg_error') ?> </div>
 <?php } ?>
+
 <div class="box">
 	<div class="box-body">
-		<a class="btn btn-primary" href="<?= base_url('users/add') ?>">Tambah User</a>
+
+		<!-- searchbox -->
+		<div class="row">
+			<div class="col-md-6" style="vertical-align:bottom">
+				<a class="btn btn-primary" href="<?= base_url('users/add') ?>">Tambah User</a>
+			</div>
+			<div class="col-md-6">
+				<label>Search Data</label>
+				<label style="float:right">Total Record : <?= $totalData ?></label>
+
+				<form id="formSearch" action="<?= base_url('users/home') ?>" method="post" style="display:none"></form>
+				<form id="formSearchReset" action="<?= base_url('users/home') ?>" method="post" style="display:none"></form>
+
+				<div class="input-group input-group-sm">
+					<select form="formSearch" name="searchCategory" class="form-control" style="width:50%">
+						<option><?= isset($search) && $search->searchCategory != NULL ? $search->searchCategory : 'Nama' ?></option>
+						<option>Name</option>
+						<option>Username</option>
+						<option>Status</option>
+					</select>
+					<input form="formSearch" name="searchKeyword" type="text" class="form-control" placeholder="Kata kunci" value="<?= isset($search) ? $search->searchKeyword  : '' ?>" style="width:50%">
+					<span class="input-group-btn">
+						<input form="formSearch" type="submit" class="btn btn-info btn-float" value="Search">
+						<input form="formSearchReset" name="searchReset" type="submit" class="btn btn-default btn-float" value="Reset">
+					</span>
+				</div>
+			</div>
+		</div>
+		<!-- end of searchbox -->
+
 		<table id="table" class="table table-bordered table-hover">
 			<thead>
 				<tr>
@@ -16,7 +46,7 @@
 					<th>Email</th>
 					<th>Status</th>
 					<th>Is Active</th>
-					<th style="width:40px;">Action</th>
+					<th style="width:50px;">Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -54,7 +84,7 @@
 			'paging'      : false,
 			'lengthChange': false,
 			'searching'   : false,
-			'ordering'    : true,
+			'ordering'    : false,
 			'info'        : false,
 			'autoWidth'   : false
 		})

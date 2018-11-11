@@ -35,6 +35,8 @@
 
     <!-- Google Font -->
     <link rel="stylesheet" href="<?= base_url('assets/adminlte-2.4.5/fonts.css') ?>">
+    <!-- Custom css -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/custom.css') ?>">
 
     <!-- jQuery -->
     <script src="<?= base_url('assets/adminlte-2.4.5/dependencies/jquery/dist/jquery.min.js') ?>"></script>
