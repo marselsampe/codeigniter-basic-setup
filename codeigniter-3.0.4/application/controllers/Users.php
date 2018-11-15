@@ -177,4 +177,57 @@ class Users extends MY_Controller
         }
     }
 
+    public function profilesetting()
+    {
+        $headerData[ 'title' ] = 'Users';
+        $headerData[ 'contentTitle' ] = 'Users';
+        $headerData[ 'userCredential' ] = $this->getUserCredential();
+        $userUniqueId = $this->getUserCredential()->uniqueId;
+
+        if(!$_POST){
+            $data['input']=$this->getUserCredential();
+        }else{
+            $name=$this->input->post('name');
+            $email=$this->input->post('email');
+            $status=$this->input->post('status');
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $repassword=$this->input->post('repassword');
+            $isActive=$this->input->post('isActive');
+
+            $input=new stdClass();
+            $input->name=$name;
+            $input->email=$email;
+            $input->status=$status;
+            $input->username=$username;
+            $input->password=$password;
+            $input->repassword=$repassword;
+            $input->isActive=$isActive;
+            $input->reststatus='Pending';
+
+            $data['input']=$input;
+
+            if($name=="" || $status=="" || $username==""){
+                $this->session->set_flashdata('msg_error', 'Inputan belum lengkap !');
+            }else if($password!=$repassword){
+                $this->session->set_flashdata('msg_error', 'Password tidak sesuai !');
+            }else{
+                $result=$this->UsersModel->update($input, $userUniqueId);
+
+                if( $result == null || $result["code"] == 0 ){
+                    $this->session->set_flashdata('msg_success', 'Data disimpan');
+                    redirect('home');
+                }else if($result["code"]=="1062"){
+                    $this->session->set_flashdata('msg_error', 'Username sudah digunakan');
+                } else if ($result != null && $result["code"]!="0"){
+                    $this->session->set_flashdata('msg_error', "Terjadi kesalahan :<br/>" . $result["message"] );
+                }
+            }
+        }
+
+        $this->load->view('layout/header', $headerData);
+        $this->load->view('users/profilesetting', $data);
+        $this->load->view('layout/footer');
+    }
+
 }
