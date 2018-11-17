@@ -20,14 +20,14 @@
 				<li class="dropdown user user-menu">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<img src="<?= base_url('assets/img/user.png') ?>" class="user-image" alt="User Image">
-						<span class="hidden-xs">Marsel Sampe Asang</span>
+						<span class="hidden-xs"><?php if(isset($userCredential)) echo $userCredential->name; ?></span>
 					</a>
 					<ul class="dropdown-menu">
 						<!-- User image -->
 						<li class="user-header" style="height: 80px;">
 							<p>
-								Marsel Sampe Asang
-								<small>Administrator</small>
+								<?php if(isset($userCredential)) echo $userCredential->name; ?>
+								<small><?php if(isset($userCredential)) echo $userCredential->status; ?></small>
 							</p>
 						</li>
 						<!-- Menu Footer-->

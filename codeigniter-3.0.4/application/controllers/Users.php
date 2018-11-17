@@ -215,8 +215,11 @@ class Users extends MY_Controller
                 $result=$this->UsersModel->update($input, $userUniqueId);
 
                 if( $result == null || $result["code"] == 0 ){
-                    $this->session->set_flashdata('msg_success', 'Data disimpan');
-                    redirect('home');
+                    unset($_SESSION['USER']);
+                    unset($_SESSION['USER_EXTENDED_DATA']);
+                    redirect('login');
+                    /*$this->session->set_flashdata('msg_success', 'Data disimpan');
+                    redirect('home');*/
                 }else if($result["code"]=="1062"){
                     $this->session->set_flashdata('msg_error', 'Username sudah digunakan');
                 } else if ($result != null && $result["code"]!="0"){
