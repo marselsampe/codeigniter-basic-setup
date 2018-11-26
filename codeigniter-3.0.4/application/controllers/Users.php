@@ -179,6 +179,8 @@ class Users extends MY_Controller
 
     public function profilesetting()
     {
+        $this->load->model('LoginModel');
+
         $headerData[ 'title' ] = 'Users';
         $headerData[ 'contentTitle' ] = 'Users';
         $headerData[ 'userCredential' ] = $this->getUserCredential();
@@ -215,11 +217,12 @@ class Users extends MY_Controller
                 $result=$this->UsersModel->update($input, $userUniqueId);
 
                 if( $result == null || $result["code"] == 0 ){
-                    unset($_SESSION['USER']);
-                    unset($_SESSION['USER_EXTENDED_DATA']);
-                    redirect('login');
-                    /*$this->session->set_flashdata('msg_success', 'Data disimpan');
-                    redirect('home');*/
+                    $newSession = $this->LoginModel->getSession($input->username);
+                    
+                    if( $newSession != NULL )
+                        $this->session->set_userdata('USER', $newSession);
+                    $this->session->set_flashdata('msg_success', 'Data disimpan');
+                    redirect('users/profilesetting');
                 }else if($result["code"]=="1062"){
                     $this->session->set_flashdata('msg_error', 'Username sudah digunakan');
                 } else if ($result != null && $result["code"]!="0"){

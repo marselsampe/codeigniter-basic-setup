@@ -6,6 +6,9 @@
         <h3 class="box-title">Edit Profile</h3>
       </div>
       <div class="box-body">
+        <?php if ($this->session->flashdata('msg_success')) { ?>
+        <div class="alert alert-success"> <?= $this->session->flashdata('msg_success') ?> </div>
+        <?php } ?>
         <?php if ($this->session->flashdata('msg_error')) { ?>
         <div class="alert alert-danger"> <?= $this->session->flashdata('msg_error') ?> </div>
         <?php } ?>
