@@ -10,6 +10,7 @@ class Home extends MY_Controller
     {
         $HeaderData[ 'title' ] = 'Home';
         $HeaderData[ 'contentTitle' ] = 'Dashboard';
+        $HeaderData[ 'userCredential' ] = $this->getUserCredential();
 
         $this->load->view('layout/header', $HeaderData);
         $this->load->view('home/index');

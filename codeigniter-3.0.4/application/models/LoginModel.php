@@ -17,4 +17,14 @@ class LoginModel extends CI_Model {
 		else
 			return null;
 	}
+
+	function getSession( $username )
+	{
+		$sql = "SELECT * FROM user WHERE username=?";
+		$query=$this->db->query($sql, $username );
+		if ($query->num_rows() > 0)
+			return $query->row();
+		else
+			return null;
+	}
 }
